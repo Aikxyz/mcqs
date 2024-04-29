@@ -338,10 +338,10 @@
         }*/
 
         if(st&&arr[4]==1){
-            if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('5001&&38555'))){
+            if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('50')&&(data.indexOf(38555))>-1)){
                 ar3zpzxh0.send(`052&&38555`)
             }
-            if (data.startsWith('62372705&&好友[云澈]进入深渊1层开始冒险')||(data.startsWith('5001&&72705'))){
+            if (data.startsWith('62372705&&好友[云澈]进入深渊1层开始冒险')||(data.startsWith('50')&&(data.indexOf(72705))>-1)){
                 ar3zpzxh0.send(`052&&72705`)
             }
         }
