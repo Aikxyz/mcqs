@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.4
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
@@ -31,6 +31,8 @@
     let skipy = 0
     let door = 0
     let skip = 1
+    let test = 0
+    let code = 0
 
     // 创建悬浮窗容器
     const floatingWindow = document.createElement('div');
@@ -44,7 +46,7 @@
 
     const floatingWindow1 = document.createElement('div');
     floatingWindow1.style.position = 'fixed';
-    floatingWindow1.style.top = '389px';
+    floatingWindow1.style.top = '274px';
     floatingWindow1.style.left = '3px';
     floatingWindow1.style.width = '80px';
     floatingWindow1.style.padding = '5px';
@@ -338,11 +340,19 @@
         }*/
 
         if(st&&arr[4]==1){
-            if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('50')&&(data.indexOf(38555))>-1)){
+            if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('500')&&(data.indexOf(38555))>-1)){
                 ar3zpzxh0.send(`052&&38555`)
             }
-            if (data.startsWith('62372705&&好友[云澈]进入深渊1层开始冒险')||(data.startsWith('50')&&(data.indexOf(72705))>-1)){
+            if(data.startsWith('82838555&&Aikx')){
+                const [_, a, b, c, d, team] = data.split('&&')
+                ar3zpzxh0.send(`052&&${team}`)
+            }
+            if (data.startsWith('62372705&&好友[云澈]进入深渊1层开始冒险')||(data.startsWith('500')&&(data.indexOf(72705))>-1)){
                 ar3zpzxh0.send(`052&&72705`)
+            }
+            if(data.startsWith('82872705&&云澈')){
+                const [_, a, b, c, d, team] = data.split('&&')
+                ar3zpzxh0.send(`052&&${team}`)
             }
         }
         //地图识别
@@ -351,9 +361,24 @@
             if(x) {
                 setTimeout(() => {
                     ar3zpzxh0.send(`142&&1&&1`)// 自动回血
-                    ar3zpzxh0.send(`142&&2&&0`)// 自动回血
-                    ar3zpzxh0.send(`142&&3&&1`)// 自动50%回血
-                    ar3zpzxh0.send(`142&&4&&0`)// 自动回血
+                    if(x==1){
+                        ar3zpzxh0.send(`142&&2&&1`)// 自动30%回血 x=1
+                    }
+                    else{
+                        ar3zpzxh0.send(`142&&2&&0`)// 自动30%回血 x=1
+                    }
+                    if(x==2){
+                        ar3zpzxh0.send(`142&&3&&1`)// 自动50%回血 x=2
+                    }
+                    else{
+                        ar3zpzxh0.send(`142&&3&&0`)// 自动50%回血 x=2
+                    }
+                    if(x==3){
+                        ar3zpzxh0.send(`142&&4&&1`)// 自动80%回血 x=3
+                    }
+                    else{
+                        ar3zpzxh0.send(`142&&4&&0`)// 自动80%回血 x=3
+                    }
                 }, 1000);
             }
             /*      if(st&&arr[4]!=1 && Date.now()-lastmove>1000*3){//超过3秒没移动
@@ -514,7 +539,7 @@
 
     function updateShuxing() {
         if (sxgx) {
-            shuxing.innerHTML = "<br>火属性:" + sx[0] + "<br>冰属性:" + sx[1] + "<br>电属性:" + sx[2];
+            shuxing.innerHTML = "<br><br>火属性:" + sx[0] + "<br>冰属性:" + sx[1] + "<br>电属性:" + sx[2] + "<br>";
         }
     }
 
@@ -801,12 +826,31 @@
     huixue.style.height = '26px';
 
     huixue.onclick = function() {
-        if (x) {
-            huixue.textContent = '不回血';
+        if(x<3){
+            ar3zpzxh0.send(`142&&1&&1`)
+            ar3zpzxh0.send(`142&&2&&0`)
+            ar3zpzxh0.send(`142&&3&&0`)
+            ar3zpzxh0.send(`142&&4&&0`)
+            if(x<1){
+                x=1
+                huixue.textContent = '30回血';
+                ar3zpzxh0.send(`142&&2&&1`)
+            }
+            else if(x<2){
+                x=2
+                huixue.textContent = '50回血';
+                ar3zpzxh0.send(`142&&3&&1`)
+            }
+            else if(x<3){
+                x=3
+                huixue.textContent = '80回血';
+                ar3zpzxh0.send(`142&&4&&1`)
+            }
+        }
+        else{
             x=0
-        } else {
-            huixue.textContent = '回血中';
-            x=1
+            huixue.textContent = '不回血';
+            ar3zpzxh0.send(`142&&1&&0`)
         }
     }
 
@@ -825,10 +869,10 @@
         } else {
             autoST.textContent = '刷图中';
             st=1
-            if(x==0)
+            if(x!=2)
             {
-                huixue.textContent = '回血中';
-                x=1
+                huixue.textContent = '50回血';
+                x=2
             }
 
         }
@@ -956,9 +1000,6 @@
 //         shuxing.innerHTML = "<br>火属性:"+sx[0]+"<br>冰属性:"+sx[1]+"<br>电属性:"+sx[2];}
     shuxing.style.backgroundColor = "white";  // 设置背景颜色为白色
 
-
-
-
     // 创建说明
     const read = document.createElement('button');
     read.textContent = ' 说明 ';
@@ -966,6 +1007,7 @@
     read.style.marginRight = '20px';
     read.style.width = '59px';
     read.addEventListener('click', function() {
+        test+=1
         ar3zpzxh0.send(`124&&20125`)
         alert(`
         【下】当前装备脱光宝石
@@ -981,18 +1023,27 @@
         【宝】快速进入地狱宝石
         【关】快速进入关卡30
         【吃鱼干】输入多少就吃多少小鱼干,最高110
-        【不回血/回血中】配合老汉脚本,回血中可在锁活刷战绩中回血
-              (50%)
-        【刷元素/刷图中】配合老汉脚本,跟随云澈/Aikx,
+        【不回血/回血】配合老汉脚本,回血中可在锁活刷战绩中回血
+              (点一下30%,点两下50%,点三下80%,再点一下关闭回血)
+        【刷元素/刷图中】配合老汉脚本,跟随云澈/Aikx(默认回血50)
                可以深渊108-109自动开活换金币套,打110boss刷元素
         【自动仓】自动将背包东西放进仓库
-               (目前支持:附魔石,水晶球以及各类世界boss整石)
+               (目前支持:附魔石,水晶球及各类世界boss整石,电元素)
         【经金功】快速开启经验buff/金币buff/功勋buff
                 (防误触,需要点击2次)
         【小号飞】补充扫荡到120+双buff药水,进入地狱91或深渊
         【扫荡卡】快速使用一张扫荡卡`)
+
+        if((bs[13]==38555)||(test>2)){
+            floatingWindow1.appendChild(dianji);
+            floatingWindow1.appendChild(xx);
+            floatingWindow1.appendChild(yy);
+            floatingWindow1.appendChild(zhixing);
+            floatingWindow1.appendChild(dm);
+        }
+
     });
-/*
+
     // 测试模拟点击
     var xx = document.createElement('input');
     xx.type = "number";
@@ -1014,7 +1065,24 @@
     dianji.addEventListener('click', function() {
         click(xx.value,yy.value)
     });
-*/
+
+    // 测试代码
+    var dm = document.createElement('input');
+    dm.type = "text";
+    dm.style.width = '51px';
+    dm.value = '';
+    dm.oninput = function() {
+        this.style.width = ((this.value.length + 1) * 8) + 'px';
+    }
+    const zhixing = document.createElement('button');
+    zhixing.textContent = ' 执行 ';
+    zhixing.style.marginRight = '0px';
+    zhixing.style.marginTop = '10px';
+    zhixing.style.width = '59px';
+    zhixing.addEventListener('click', function() {
+        ar3zpzxh0.send(`${dm.value}`)
+    });
+
     // 将按钮添加到悬浮窗容器中
 
     floatingWindow.appendChild(downButton);
@@ -1050,14 +1118,10 @@
     }, 10000);
     floatingWindow.appendChild(buff);
     floatingWindow.appendChild(flying);
+    floatingWindow.appendChild(read);
     floatingWindow1.appendChild(sdk);
     floatingWindow1.appendChild(shuxing);
-    floatingWindow.appendChild(read);
-/*
-    floatingWindow.appendChild(dianji);
-    floatingWindow.appendChild(xx);
-    floatingWindow.appendChild(yy);
-*/
+
 
     // 将悬浮窗容器添加到页面body元素中
     document.body.appendChild(floatingWindow);
