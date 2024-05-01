@@ -339,7 +339,7 @@
             lastmove = Date.now()
         }*/
 
-        if(st&&arr[4]==1){
+        if(st&&((arr[4]==1)||(arr[4]==11))){
             if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('500')&&(data.indexOf(38555))>-1)){
                 ar3zpzxh0.send(`052&&38555`)
             }
