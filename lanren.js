@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.41
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
@@ -33,6 +33,7 @@
     let skip = 1
     let test = 0
     let code = 0
+    let kc = 1
 
     // 创建悬浮窗容器
     const floatingWindow = document.createElement('div');
@@ -432,33 +433,35 @@
                 }, 1000);
                 skip = 1
             }
-            if(arr[4]==1&&dc==0){//主城
+            if(arr[4]==1&&dc==0&&kc){//主城
+                kc=0
                 ar3zpzxh0.send(`30&&${bs[12]}`);
 
                 //381 784
                 setTimeout(() => {
                     click(0.5,0.3);
-                }, 1000);
+                }, 3000);
                 setTimeout(() => {
                     click(0.85,0.5);
-                }, 2500);
+                }, 4500);
                 setTimeout(() => {
                     click(0.85,0.5);
-                }, 4000);
+                }, 6000);
                 setTimeout(() => {
                     click(0.7,0.5);
-                }, 5500);
+                }, 7500);
                 setTimeout(() => {
                     click(0.7,0.5);
-                }, 7000);
+                }, 9000);
                 setTimeout(() => {
                     ar3zpzxh0.send(`025&&1`);
-                }, 8500);
+                }, 10500);
                 setTimeout(() => {
+                    kc=1
                     if(arr[4]==11){
                         ar3zpzxh0.send(`024&&0`)
                     }
-                }, 10000);
+                }, 22000);
 
                 /*    setTimeout(() => {
                     click(0.825,0.872)
