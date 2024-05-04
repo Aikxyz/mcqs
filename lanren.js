@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.41
+// @version      1.42
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
@@ -341,6 +341,9 @@
         }*/
 
         if(st&&((arr[4]==1)||(arr[4]==11))){
+            if(arr[4]==11){
+                ar3zpzxh0.send(`024&&0`)
+            }
             if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('500')&&(data.indexOf(38555))>-1)){
                 ar3zpzxh0.send(`052&&38555`)
             }
