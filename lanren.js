@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.42
+// @version      1.43
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
@@ -341,7 +341,7 @@
         }*/
 
         if(st&&((arr[4]==1)||(arr[4]==11))){
-            if(arr[4]==11){
+            if((arr[4]==11)&&(dc)){
                 ar3zpzxh0.send(`024&&0`)
             }
             if (data.startsWith('62338555&&好友[Aikx]进入深渊1层开始冒险')||(data.startsWith('500')&&(data.indexOf(38555))>-1)){
@@ -427,6 +427,9 @@
 //                     ar3zpzxh0.send(`025&&${door}`)//跳门
 //                 }
 //             }
+            if (data.startsWith('361301')) {//1层
+                skip = 1
+            }
             if (data.startsWith('361408')) {//108层
                 skip = 0
             }
@@ -434,7 +437,6 @@
                 setTimeout(() => {
                     ar3zpzxh0.send(`141&&0`)
                 }, 1000);
-                skip = 1
             }
             if(arr[4]==1&&dc==0&&kc){//主城
                 kc=0
@@ -943,7 +945,7 @@
     // 创建小号飞
     const flying = document.createElement('button');
     flying.textContent = '小号飞';
-    flying.style.marginTop = '30px';
+    flying.style.marginTop = '20px';
     flying.style.marginRight = '0px';
     flying.style.width = '59px';
     flying.addEventListener('click', function() {
@@ -1009,7 +1011,7 @@
     // 创建说明
     const read = document.createElement('button');
     read.textContent = ' 说明 ';
-    read.style.marginTop = '50px';
+    read.style.marginTop = '20px';
     read.style.marginRight = '20px';
     read.style.width = '59px';
     read.addEventListener('click', function() {
@@ -1041,11 +1043,21 @@
         【扫荡卡】快速使用一张扫荡卡`)
 
         if((bs[13]==38555)||(test>2)){
-            floatingWindow1.appendChild(dianji);
-            floatingWindow1.appendChild(xx);
-            floatingWindow1.appendChild(yy);
-            floatingWindow1.appendChild(zhixing);
-            floatingWindow1.appendChild(dm);
+            floatingWindow.appendChild(optionBodyRadio);
+            floatingWindow.appendChild(optionBodyLabel);
+            floatingWindow.appendChild(optionHeadRadio);
+            floatingWindow.appendChild(optionHeadLabel);
+            floatingWindow.appendChild(buff);
+            floatingWindow.appendChild(flying);
+            floatingWindow.appendChild(read);
+            if(test>4)
+            {
+                floatingWindow1.appendChild(dianji);
+                floatingWindow1.appendChild(xx);
+                floatingWindow1.appendChild(yy);
+                floatingWindow1.appendChild(zhixing);
+                floatingWindow1.appendChild(dm);
+            }
         }
 
     });
@@ -1090,7 +1102,6 @@
     });
 
     // 将按钮添加到悬浮窗容器中
-
     floatingWindow.appendChild(downButton);
     floatingWindow.appendChild(upButton);
     floatingWindow.appendChild(powerButton);
@@ -1127,7 +1138,6 @@
     floatingWindow.appendChild(read);
     floatingWindow1.appendChild(sdk);
     floatingWindow1.appendChild(shuxing);
-
 
     // 将悬浮窗容器添加到页面body元素中
     document.body.appendChild(floatingWindow);
