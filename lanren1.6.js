@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.61
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
@@ -35,9 +35,11 @@
     let code = 0
     let kc = 1
     let dybs9 = 1
-    let huoli = 540
+    let huoli = 666
     let zdhl = 0
-    let jsq = -1
+    let jsq = 0
+    let kzq = 2
+    let bfb = 0
 
     // 创建悬浮窗容器
     const floatingWindow = document.createElement('div');
@@ -265,6 +267,11 @@
                 }
             }
         }
+        if (data.startsWith('3850')) {
+            huoli = 0
+            sxgx=1;
+            updateShuxing();
+        }
         if (data.startsWith('3851')) {
             huoli = data.split('&&')[1]
             sxgx=1;
@@ -331,6 +338,9 @@
             sxgx=1;
             updateShuxing();
         }
+        if (data.startsWith('821')) {
+           bfb = data.substring(3); //地图百分比
+        }
         /*
         if (data.startsWith('8280&&&&0&&2&&0&&0&&0&&-1&&-1&&0&&0&&骑士团的[Aikx]进入世界地魔王[火神纳尔什]所在地图')) {//Aikx
             if(bs[13]=1){
@@ -379,21 +389,36 @@
             }
         }
 
-        if(zdhl&&jsq&&huoli==0){
-            jsq = 0;
-            updateShuxing();
-            ar3zpzxh0.send(`30&&${bs[6]}`)//自动吃鱼干
-            setTimeout(() => {
-              //  ar3zpzxh0.send(`030&&${bs[21]}`)//自动扫荡卡
-            }, 500);
-        }
+//         if(zdhl){
+//             if (data.startsWith('3850')) { //是否0活
+//                 if(bfb<10){ //判断地图进度
+//                     ar3zpzxh0.send(`30&&${bs[6]}`)//自动吃鱼干
+//                 }
+//             }
+//             if(jsq)
+//             setTimeout(() => {
+//                 //ar3zpzxh0.send(`030&&${bs[21]}`)//进图半秒自动扫荡卡
+//                 alert("扫荡")
+//                 jsq = 0
+//             }, 500);
+//         }
 
         //地图识别
         if (data.startsWith('361')) {
-            jsq += 1
+            kzq += 1
+            if(zdhl && A56==2 && kzq>1 && huoli===0){
+                kzq = 0
+                ar3zpzxh0.send(`30&&${bs[6]}`)//自动吃鱼干
+            }
+            if(zdhl)
+                setTimeout(() => {
+                    ar3zpzxh0.send(`030&&${bs[21]}`)//进图半秒自动扫荡卡
+                }, 500);
+
             arr = data.split('&&')
             if(arr[4]==1||arr[4]==11){
                 jsq = 0
+                kzq = 0
             }
             updateShuxing();
             if(x) {
@@ -590,7 +615,7 @@
 
     function updateShuxing() {
         if (sxgx) {
-            shuxing.innerHTML = "<br><br>活力:" + huoli + "<br><br>火属性:" + sx[0] + "<br>冰属性:" + sx[1] + "<br>电属性:" + sx[2] + "<br>";
+            shuxing.innerHTML = "<br><br>活力值:" + huoli + "<br><br>火属性:" + sx[0] + "<br>冰属性:" + sx[1] + "<br>电属性:" + sx[2] + "<br>";
         }
     }
 
@@ -861,6 +886,7 @@
         } else {
             autoHL.textContent = '吃鱼中';
             ar3zpzxh0.send(`142&&15&&0`);//关闭自动扫荡
+            ar3zpzxh0.send(`141&&0`);//开活力
             zdhl=1
         }
     }
@@ -1098,6 +1124,8 @@
         【宝】快速进入地狱宝石(仅可失效一次,除非刷新)
         【关】快速进入关卡30
         【吃鱼干】输入多少就吃多少小鱼干,最高110
+        【自助鱼/吃鱼中】开启后,开活力,关扫荡：
+               0活力自动吃小鱼干，卡活力bug(注意脚本没buff锁活)
         【不回血/回血】配合老汉脚本,回血中可在锁活刷战绩中回血
               (点一下30%,点两下50%,点三下80%,再点一下关闭回血)
         【刷元素/刷图中】自动跟随云澈/Aikx(默认回血50)
