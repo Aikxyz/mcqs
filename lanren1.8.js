@@ -1204,6 +1204,7 @@
     zhenying.style.width = '40px';
     zhenying.addEventListener('click', function() {
         ar3zpzxh0.send(`123&&0&&0&&0&&${chat.value}`)
+        chat.value = '';
     });
     const shijie = document.createElement('button');
     shijie.textContent = '世';
@@ -1211,6 +1212,7 @@
     shijie.style.width = '40px';
     shijie.addEventListener('click', function() {
         ar3zpzxh0.send(`123&&1&&0&&0&&${chat.value}`)
+        chat.value = '';
     });
 
     // 创建说明
