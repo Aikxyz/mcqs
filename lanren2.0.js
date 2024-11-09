@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         懒人插件
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      2.0
 // @description  try to take over the world!
 // @author       You
 // @match        *://mcqs.bibbuyer.com:1780/*
